@@ -1,0 +1,299 @@
+<html>
+ <head>
+<!--  <script type="application/javascript" src="draw.js"></script> -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="includes.js"></script>
+  <style>
+	body{
+		margin: 0;
+	}
+/*	h1{
+		margin: 0;
+		text-align: center;
+		color: #fff;
+		font-size: 100px;
+		font-weight: normal;
+		padding-top: 20px;
+		font-family: Ubuntu;
+	}*/
+	canvas{
+		position: absolute;
+		background-color: transparent;
+		z-index: -1;
+	}
+	
+	/* share btwen modules */
+	#main-content{
+		background-color: #fff;
+		width: 960px;
+		margin: 25px auto 0 auto;
+		padding: 25px 0;
+		box-shadow: 0 0 7px #000;
+	}
+	
+	.page-container{
+		padding-top: 50px;
+	}
+	
+	
+	/**/
+	#links{
+		width: 33%;
+		padding-top: 150px;
+		color: #fff;
+	}
+	#links a{
+		display: inline-block;
+		text-align: center;
+	}
+		
+  </style>
+ </head>
+ <body>
+	<canvas id="canvas"></canvas>
+	
+	<!-- TODO: create real links for non-ajax sites? -->
+	<div id="links">
+		<a href="#nonajax">Resume</a>
+		<a href="#nonajax2">Portfolio</a>
+	</div>
+	
+	<div id="portfolio" class="page-container">
+	<style>
+		#portfolio{
+			text-align: center;
+		}
+		.portfolio-item{
+			
+		}
+		#portfolio-display-img, #portfolio-display-text{
+			margin: 0 auto;
+			box-shadow: 0 0 7px #aaa;
+			display: inline-block;
+		}
+		#portfolio-display-text{
+			width: 560px;
+			padding: 20px;
+		}
+		#portfolio-display-text p{
+			text-align: left;
+		}
+		.portfolio-item{
+			opacity: .7;
+			display: inline-block;
+			margin: 0 3px;
+		}
+		.portfolio-item:hover{
+			opacity: .9;
+		}
+		.portfolio-item img{
+			width: 125px;
+		}
+		.portfolio-item p{
+			display: none;
+		}
+		.selected{
+			opacity: 1.0;
+			box-shadow: 0 0 7px #fff;
+		}
+	
+	</style>
+		        
+		<div id="portfolio-choice">
+			<div class="portfolio-item"><img src="portfolio/madrev-sm.png" /><p>Redesigned and coded new website for literary magazine - Madison Review.</p></div>
+			<div class="portfolio-item"><img src="portfolio/esl-sm.png" /><p>Redesigned, coded, implemented new website in Typolight CMS (aka Contao CMS) for ESL Program at UW-Madison.</p></div>
+			<div class="portfolio-item"><img src="portfolio/stilted-sm.png" /><p>Developed personal website of makeup artist Jessica McCormick from psd design and implemented in Contao CMS. Built custom plugin to support content management of galleries.</p></div>
+			<div class="portfolio-item"><img src="portfolio/lanscaping-sm.png" /><p>Designed, developed, and built content for Dalton Landscaping. Implemented in Contao CMS.</p></div>
+			<div class="portfolio-item"><img src="portfolio/ose-sm.png" /><p>Currently developing web application for viral vclasseo recording and dissemination for nonprofit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.</p></div>
+		</div>
+		<br />
+		<div id="portfolio-display">
+			<div id="portfolio-display-img"></div>
+			<br/><br/>
+			<div id="portfolio-display-text"></div>
+		</div>
+		<!-- **<p>Developed HTML5 games and apps for English camps. For examples see - www.jacobdalton.com/english_camps</p>
+-->
+	</div>
+	
+	<script>
+		$(document).ready(function(){
+			$('.portfolio-item').click(function(){
+				var $selected = $('.selected');
+				if( !$(this).is($selected)){
+					$selected.removeClass('selected');
+					$(this).addClass('selected');
+					var clickElement = this; // closure var for use w/inner function 
+					$('#portfolio-display').fadeOut( 'fast' , function(){
+						var $inject_image = $(clickElement).find('img').clone(); 
+						var $inject_p = $(clickElement).find('p').clone(); 
+						console.log($inject_image);
+						$('#portfolio-display-img').html($inject_image);//.css('display','none').fadeIn('slow');
+						$('#portfolio-display-text').html($inject_p); 
+						$('#portfolio-display').fadeIn('slow');
+					});
+				}
+			});
+		});
+	</script>
+	
+
+	
+   <div id="resume" style="display:none">
+	<style>
+		*{
+			margin: 0;
+		}
+
+		#bumpers{
+			padding: 0 100px;
+		}
+		h1{
+			font-size: 100px;
+			font-weight: normal;
+			text-align: center;
+		}
+		#contact-info{
+			text-align: center;
+		}
+		#contact-info span{
+			margin-left: 10px;
+		}
+		h2{
+			color: #444;
+			font-weight: normal;
+		}
+		ul{
+			margin-top: 5px;
+			padding-left: 0;
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+			color: inherit;
+		}
+		.section{
+			margin-top: 15px;
+			color: #555;
+		}
+		#skills{
+			float: left;
+		}
+		#education{
+			float: right;
+		}
+		#experience{
+			clear: both;
+		}
+		#experience a{
+			color: #444;
+		}
+
+		.work-exp strong, .work-exp span, .work-exp a{
+			margin-right: 10px;
+		}
+		.work-type{
+			font-size: 90%;
+			color: #999;
+		}
+		.work-desc{
+			margin-bottom: 10px;
+		}
+
+		#address{
+			margin-top: 15px;
+			text-align: center;
+		}
+
+		.finish-time{
+			color: #444;
+		}
+	</style>
+		<div id="main-content">  
+			<div id="bumpers">
+				<h1>Jacob Dalton</h1>
+				<div id="contact-info">
+					<span>715-220-3615</span>
+					<span><a href="www.jacobdalton.com">www.jacobdalton.com</a></span>
+					<span>jacobrdalton@gmail.com</span>
+				</div>
+				
+				<div id="skills" class="section">
+					<h2>Tech Skills</h2>  
+					<ul>
+						<li><strong>Frontend</strong> - HTML5, CSS3, Javascript, jQuery</li>
+						<li><strong>Backend</strong> - PHP, MySQL, Apache</li>
+						<li><strong>Version Control</strong> - Git</li>
+						<li><strong>CMS</strong> - Contao, MediaWiki</li>
+						<li><strong>Design</strong> - GIMP, Inkscape</li>
+					</ul>
+				</div>
+				
+				<div id="education" class="section">
+					<h2>Education</h2>
+					<ul class="institution">
+						<li><strong>University of Wisconsin-Madison</strong> <span class="finish-time">2009</span></li>
+						<li>B.S. Math and English Double Major </li>
+						<li>Computer Science Certificate</li>
+						<li>3.38 GPA</li>
+					</ul>
+
+					<ul class="institution">
+						<li><strong>Copenhagen University</strong> <span class="finish-time">2007</span></li>
+						<li>Exchange Student</li>
+						<li>Master Level Courses in Literature</li>
+					</ul>
+				</div>
+				
+				<div id="experience" class="section">
+					<h2>Experience</h2>
+					<div class="work-exp"><strong>Open Source Ecology</strong><a href="http://test.opensourceecology.org/wiki/Special:TrueFans">test.opensourceecology.org/wiki/Special:TrueFans</a><span class="finish-time">2012 - present</span></div>
+					<div class="work-type">Freelance Development and Design</div>
+					<p class="work-desc">Currently developing web application for viral vclasseo recording and dissemination for nonprofit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.</p>
+
+					<div class="work-exp"><strong>Dalton Landscaping</strong><a href="http://www.daltonlandscaping.com">www.daltonlandscaping.com</a><span class="finish-time">2012</span></div>
+					<div class="work-type">Freelance Development, Design, and Photography</div>
+					<p class="work-desc">Designed, developed, and built content for Dalton Landscaping. Implemented in Contao CMS.</p>
+
+					<div class="work-exp"><strong>Stilted Style</strong><a href="http://www.stiltedstyle.ca">www.stiltedstyle.ca</a><span class="finish-time">2011</span></div>
+					<div class="work-type">Freelance Development</div>
+					<p class="work-desc">Developed personal website of makeup artist Jessica McCormick from psd design and implemented in Contao CMS. Built custom plugin to support content management of galleries.</p>
+
+					<div class="work-exp"><strong>Buil Elementary</strong><span class="finish-time">2010 - 2012</span></div>
+					<div class="work-type">Assitant English Teacher</div>
+					<p class="work-desc">Designed and taught English curriculum in South Korea. Developed HTML5 games and apps for English camps. For examples see - <a href="www.jacobdalton.com/english_camps">www.jacobdalton.com/english_camps</a></p>
+
+					<div class="work-exp"><strong>UW-Madison ESL Program</strong><a href="http://www.english.wisc.edu/esl">www.english.wisc.edu/esl</a><span class="finish-time">2010</span></div>
+					<div class="work-type">Freelance Development and Design</div>
+					<p class="work-desc">Redesigned, coded, implemented new website in Typolight CMS (aka Contao CMS) for ESL Program at UW-Madison.</p>
+
+					<div class="work-exp"><strong>Madison Review</strong><a href="http://www.english.wisc.edu/madisonreview">www.english.wisc.edu/madisonreview</a><span class="finish-time">2009</span></div>
+					<div class="work-type">Freelance Development and Design</div>
+					<p class="work-desc">Redesigned and coded new website for literary magazine - Madison Review.</p>
+
+				</div>
+				
+				<div id="interests" class="section">
+					<h2>Interests</h2>
+					<p>Travel, FOSS, Arduino, Craft Beer, and Literature.</p>
+				</div>
+				
+				<div id="address">1643 100th Street New Richmond, WI 54017</div>
+			</div>  
+		</div>
+	</div>
+
+
+   <script>
+		$(document).ready(function() {
+			var width = $('body').width();
+			console.log(width);
+			$('canvas').attr('width', width);
+			$('canvas').attr('height', 400);
+
+			var libs = new Array('main.js', 'util.js', 'sprite.js', 'input.js');
+			include_files(libs, function(){ init()});
+		});
+	</script>
+ </body>
+</html>
