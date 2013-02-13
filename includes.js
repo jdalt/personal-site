@@ -7,7 +7,7 @@ function include_files(include_libraries, callback)
 	}
 	var libraries_loaded = 0;
 	for(var i=0; i<include_libraries.length; i++){
-		dynamicallyLoadJSFile(include_libraries[i], function(){
+		dynamicallyLoadJSFile('js/' + include_libraries[i], function(){
 			libraries_loaded++;
 			if(libraries_loaded === include_libraries.length){
 				callback();

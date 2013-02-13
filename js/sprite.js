@@ -7,7 +7,7 @@ var Sprite = (function(module)
 	function createSprite(imgFile)
 	{
 		var sprite = new Image();
-		sprite.src = imgFile; // ** fallback for failed image loading !!
+		sprite.src = 'sprite/' +imgFile; // ** fallback for failed image loading !!
 		
 		sprite.onload = function(){
 			this.setSize(this.width, this.height); // recalculate the center

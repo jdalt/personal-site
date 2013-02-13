@@ -1,0 +1,161 @@
+/* main.css - primary style sheet for portfolio website */
+
+*{
+	margin: 0;
+}
+html{
+	width: 100%;
+}
+body{
+	margin: 0;
+	font-family: ubuntu;
+	width: 100%;
+	overflow-x: hidden;
+}
+canvas{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: transparent; /* ??? */
+	z-index: -1;
+}
+
+h1{
+	font-size: 100px;
+	font-weight: normal;
+	text-align: center;
+}
+h2{
+	color: #444;
+	font-weight: normal;
+}
+ul{
+	margin-top: 5px;
+	padding-left: 0;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: inherit;
+}
+
+/* share btwen modules */
+#main-display{
+	text-align: center;
+}
+
+.page-container{
+	padding-top: 50px;
+}
+
+#main-content{
+	text-align: left;
+	background-color: #fff;
+	width: 960px;
+	margin: 25px auto 0 auto;
+	padding: 25px 0;
+	box-shadow: 0 0 7px #000;
+}
+
+
+/**/
+#links{
+	padding-left: 15%;
+	padding-top: 150px;
+	color: #fff;
+	float: left;
+	position: absolute; /* take #links out of flow calculations so other content gets properly centered with text-align */
+}
+#links a{
+	font-size: 150%;
+	padding-bottom: .5em;
+	text-align: center;
+	display: block;
+}
+
+/****************************/
+/** Portfolio CSS **/
+.portfolio-item{
+	opacity: .7;
+	display: inline-block;
+	margin: 0 3px;
+}
+.portfolio-item:hover{
+	opacity: .9;
+}
+.portfolio-item{
+	width: 125px;
+}
+.selected{
+	opacity: 1.0;
+	box-shadow: 0 0 7px #fff;
+}
+
+#portfolio-display{
+	margin-top: 15px;
+	display: inline-block;
+	width: 600px;
+	text-align: left;
+}
+#portfolio-display img{
+	margin: 0 auto;
+	box-shadow: 0 0 7px #aaa;
+	display: inline-block;
+}
+#portfolio-display p{
+	margin-top: 20px;
+	padding: 20px;
+	box-shadow: 0 0 7px #aaa;
+}
+#portfolio-display p span{
+	display: block;
+}
+
+
+/****************************/
+/** Resume Css **/
+#bumpers{
+	padding: 0 100px;
+}
+#contact-info{
+	text-align: center;
+}
+#contact-info span{
+	margin-left: 10px;
+}
+.section{
+	margin-top: 15px;
+	color: #555;
+}
+#skills{
+	float: left;
+}
+#education{
+	float: right;
+}
+#experience{
+	clear: both;
+}
+#experience a{
+	color: #444;
+}
+
+.work-exp strong, .work-exp span, .work-exp a{
+	margin-right: 10px;
+}
+.work-type{
+	font-size: 90%;
+	color: #999;
+}
+.work-desc{
+	margin-bottom: 10px;
+}
+
+#address{
+	margin-top: 15px;
+	text-align: center;
+}
+
+.finish-time{
+	color: #444;
+}

@@ -1,214 +1,41 @@
 <html>
  <head>
-<!--  <script type="application/javascript" src="draw.js"></script> -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-  <script src="includes.js"></script>
-  <style>
-	body{
-		margin: 0;
-	}
-/*	h1{
-		margin: 0;
-		text-align: center;
-		color: #fff;
-		font-size: 100px;
-		font-weight: normal;
-		padding-top: 20px;
-		font-family: Ubuntu;
-	}*/
-	canvas{
-		position: absolute;
-		background-color: transparent;
-		z-index: -1;
-	}
-	
-	/* share btwen modules */
-	#main-content{
-		background-color: #fff;
-		width: 960px;
-		margin: 25px auto 0 auto;
-		padding: 25px 0;
-		box-shadow: 0 0 7px #000;
-	}
-	
-	.page-container{
-		padding-top: 50px;
-	}
-	
-	
-	/**/
-	#links{
-		width: 33%;
-		padding-top: 150px;
-		color: #fff;
-	}
-	#links a{
-		display: inline-block;
-		text-align: center;
-	}
-		
-  </style>
+  <link rel="stylesheet" href="main.css"/>
  </head>
  <body>
 	<canvas id="canvas"></canvas>
 	
-	<!-- TODO: create real links for non-ajax sites? -->
+	<button id="pause-button">Pause</button>
+	<!-- Consider: create real links for non-javscript sites? -->
 	<div id="links">
-		<a href="#nonajax">Resume</a>
-		<a href="#nonajax2">Portfolio</a>
+		<a id="resume-button" href="#nonajax">Resume</a>
+		<a id="portfolio-button" href="#nonajax2">Portfolio</a>
 	</div>
 	
-	<div id="portfolio" class="page-container">
-	<style>
-		#portfolio{
-			text-align: center;
-		}
-		.portfolio-item{
-			
-		}
-		#portfolio-display-img, #portfolio-display-text{
-			margin: 0 auto;
-			box-shadow: 0 0 7px #aaa;
-			display: inline-block;
-		}
-		#portfolio-display-text{
-			width: 560px;
-			padding: 20px;
-		}
-		#portfolio-display-text p{
-			text-align: left;
-		}
-		.portfolio-item{
-			opacity: .7;
-			display: inline-block;
-			margin: 0 3px;
-		}
-		.portfolio-item:hover{
-			opacity: .9;
-		}
-		.portfolio-item img{
-			width: 125px;
-		}
-		.portfolio-item p{
-			display: none;
-		}
-		.selected{
-			opacity: 1.0;
-			box-shadow: 0 0 7px #fff;
-		}
-	
-	</style>
-		        
-		<div id="portfolio-choice">
-			<div class="portfolio-item"><img src="portfolio/madrev-sm.png" /><p>Redesigned and coded new website for literary magazine - Madison Review.</p></div>
-			<div class="portfolio-item"><img src="portfolio/esl-sm.png" /><p>Redesigned, coded, implemented new website in Typolight CMS (aka Contao CMS) for ESL Program at UW-Madison.</p></div>
-			<div class="portfolio-item"><img src="portfolio/stilted-sm.png" /><p>Developed personal website of makeup artist Jessica McCormick from psd design and implemented in Contao CMS. Built custom plugin to support content management of galleries.</p></div>
-			<div class="portfolio-item"><img src="portfolio/lanscaping-sm.png" /><p>Designed, developed, and built content for Dalton Landscaping. Implemented in Contao CMS.</p></div>
-			<div class="portfolio-item"><img src="portfolio/ose-sm.png" /><p>Currently developing web application for viral vclasseo recording and dissemination for nonprofit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.</p></div>
-		</div>
-		<br />
-		<div id="portfolio-display">
-			<div id="portfolio-display-img"></div>
-			<br/><br/>
-			<div id="portfolio-display-text"></div>
-		</div>
-		<!-- **<p>Developed HTML5 games and apps for English camps. For examples see - www.jacobdalton.com/english_camps</p>
--->
+	<div id="main-display" class="page-container">
 	</div>
-	
-	<script>
-		$(document).ready(function(){
-			$('.portfolio-item').click(function(){
-				var $selected = $('.selected');
-				if( !$(this).is($selected)){
-					$selected.removeClass('selected');
-					$(this).addClass('selected');
-					var clickElement = this; // closure var for use w/inner function 
-					$('#portfolio-display').fadeOut( 'fast' , function(){
-						var $inject_image = $(clickElement).find('img').clone(); 
-						var $inject_p = $(clickElement).find('p').clone(); 
-						console.log($inject_image);
-						$('#portfolio-display-img').html($inject_image);//.css('display','none').fadeIn('slow');
-						$('#portfolio-display-text').html($inject_p); 
-						$('#portfolio-display').fadeIn('slow');
-					});
-				}
-			});
-		});
+
+	<script type="text/template" id="tmpl-portfolio">
+		<div><div id="portfolio-items-container">
+		<% _.each( app, function(item, index){ %>
+			<img class="portfolio-item" data-id="<%- index %>" src="img/<%- item.img %>" />
+		<% }); %>
+		</div>
+		<div id="portfolio-display"></div>
+		</div>
 	</script>
 	
-
+	<script type="text/template" id="tmpl-portfolio-sub">
+		<img src="img/<%= img %>" />
+		<div></div>
+		<p>
+			<span><strong><%= clientName %></strong></span>
+			<span><a href="http://<%= url %>"><%= url %></a></span>
+			<%= desc %>
+		</p>
+	</script>
 	
-   <div id="resume" style="display:none">
-	<style>
-		*{
-			margin: 0;
-		}
-
-		#bumpers{
-			padding: 0 100px;
-		}
-		h1{
-			font-size: 100px;
-			font-weight: normal;
-			text-align: center;
-		}
-		#contact-info{
-			text-align: center;
-		}
-		#contact-info span{
-			margin-left: 10px;
-		}
-		h2{
-			color: #444;
-			font-weight: normal;
-		}
-		ul{
-			margin-top: 5px;
-			padding-left: 0;
-			list-style: none;
-		}
-		a{
-			text-decoration: none;
-			color: inherit;
-		}
-		.section{
-			margin-top: 15px;
-			color: #555;
-		}
-		#skills{
-			float: left;
-		}
-		#education{
-			float: right;
-		}
-		#experience{
-			clear: both;
-		}
-		#experience a{
-			color: #444;
-		}
-
-		.work-exp strong, .work-exp span, .work-exp a{
-			margin-right: 10px;
-		}
-		.work-type{
-			font-size: 90%;
-			color: #999;
-		}
-		.work-desc{
-			margin-bottom: 10px;
-		}
-
-		#address{
-			margin-top: 15px;
-			text-align: center;
-		}
-
-		.finish-time{
-			color: #444;
-		}
-	</style>
+	<script type="text/template" id="tmpl-resume">	
 		<div id="main-content">  
 			<div id="bumpers">
 				<h1>Jacob Dalton</h1>
@@ -261,13 +88,13 @@
 
 					<div class="work-exp"><strong>Buil Elementary</strong><span class="finish-time">2010 - 2012</span></div>
 					<div class="work-type">Assitant English Teacher</div>
-					<p class="work-desc">Designed and taught English curriculum in South Korea. Developed HTML5 games and apps for English camps. For examples see - <a href="www.jacobdalton.com/english_camps">www.jacobdalton.com/english_camps</a></p>
+					<p class="work-desc">Designed and taught English curriculum in South Korea. Developed HTML5 games and apps for English camps. For examples see - <a href="www.jacobdalton.com/english_camps/">www.jacobdalton.com/english_camps/</a></p>
 
-					<div class="work-exp"><strong>UW-Madison ESL Program</strong><a href="http://www.english.wisc.edu/esl">www.english.wisc.edu/esl</a><span class="finish-time">2010</span></div>
+					<div class="work-exp"><strong>UW-Madison ESL Program</strong><a href="http://www.english.wisc.edu/esl/">www.english.wisc.edu/esl/</a><span class="finish-time">2010</span></div>
 					<div class="work-type">Freelance Development and Design</div>
 					<p class="work-desc">Redesigned, coded, implemented new website in Typolight CMS (aka Contao CMS) for ESL Program at UW-Madison.</p>
 
-					<div class="work-exp"><strong>Madison Review</strong><a href="http://www.english.wisc.edu/madisonreview">www.english.wisc.edu/madisonreview</a><span class="finish-time">2009</span></div>
+					<div class="work-exp"><strong>Madison Review</strong><a href="http://www.english.wisc.edu/madisonreview/">www.english.wisc.edu/madisonreview/</a><span class="finish-time">2009</span></div>
 					<div class="work-type">Freelance Development and Design</div>
 					<p class="work-desc">Redesigned and coded new website for literary magazine - Madison Review.</p>
 
@@ -281,18 +108,149 @@
 				<div id="address">1643 100th Street New Richmond, WI 54017</div>
 			</div>  
 		</div>
-	</div>
+	</script>
+
+ 
+  	<script data-main="js/main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
+	<script>
+		require.config({
+			baseUrl: 'js',
+			paths: {
+				jQuery: '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',
+				underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js'
+			},
+			shim: {
+				underscore: {
+					exports: '_'
+				}
+			}
+		});
+
+		require( ['jQuery', 'demo', 'input', 'util'],
+			function($, mod){
 
 
-   <script>
-		$(document).ready(function() {
-			var width = $('body').width();
-			console.log(width);
-			$('canvas').attr('width', width);
-			$('canvas').attr('height', 400);
+			}
+		);
 
-			var libs = new Array('main.js', 'util.js', 'sprite.js', 'input.js');
-			include_files(libs, function(){ init()});
+	</script>
+<!-- these bad boys need to into my shim config i believe -->
+  <script src=></script>
+  <script src=></script>
+  <script src="includes.js"></script>
+	<script>
+			var libs = new Array( 'util.js', 'sprite.js', 'input.js', 'main.js');
+			include_files(libs, function(){ Demo.init(); Demo.start();});
+
+		// Data Model For Portfolio Work
+		// TODO: Add English Camp Work
+		var portfolioData =  // :( global namespace pollution, replace with textfile and RequireJs
+			[ {
+					clientName: 'The Madison Review',
+					url: 'www.english.wisc.edu/madisonreview/',
+					img: 'madrev-sm.png',
+					desc: 'Redesigned and coded new website for literary magazine - Madison Review.'
+				
+				}, {
+					clientName: 'UW-Madison ESL Program',
+					url: 'www.english.wisc.edu/esl/',
+					img: 'esl-sm.png',
+					desc: 'Redesigned, coded, implemented new website in Typolight CMS (aka Contao CMS) for ESL Program at UW-Madison.'
+				
+				}, {
+					clientName: 'Jessica McCormick',
+					url: 'www.stiltedstyle.ca',
+					img: 'stilted-sm.png',
+					desc:'Developed personal website of makeup artist Jessica McCormick from psd design and implemented in Contao CMS. Built custom plugin to support content management of galleries.'
+				}, {
+					clientName: 'Dalton Landscaping',
+					url: 'www.daltonlandscaping.com',
+					img: 'landscaping-sm.png',
+					desc:'Designed, developed, and built content for Dalton Landscaping. Implemented in Contao CMS.'
+				}, {
+					clientName: 'Open Source Ecology',
+					url: 'test.opensourceecology.org/wiki/Special:TrueFans',
+					img: 'ose-sm.png',
+					desc: 'Currently developing web application for viral video recording and dissemination for nonprofit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.'
+				} 
+			];
+		
+		$(document).ready(function(){
+			
+			$('#links a').click(function(e){
+				// We only respond to clicks that change the active link
+				if($('#main-display').attr('data-active-id') !== $(this).attr('id')){
+					var clickedLink = this; // closure for inner function
+					$('#main-display').slideUp(function(){
+						var nextId = $(clickedLink).attr('id');
+						switch(nextId){
+						case 'resume-button':
+							displayResume();
+							break;
+						case 'portfolio-button':
+							displayPortfolio();
+							break;
+						default:
+							console.log('WTF Button Clicked');
+						}
+						$('#main-display').slideDown('slow');
+						$('#main-display').attr('data-active-id', nextId);
+					});
+				}
+				e.preventDefault();
+			});
+
+			$('#pause-button').click(function(){
+				if(Demo.isRunning()){
+					Demo.pause();	
+				} else {
+					Demo.start();
+				}
+			});
+				
+			// Helper Functions
+			function displayResume()
+			{
+				var tmpl = _.template($('#tmpl-resume').html(), portfolioData, {variable:'app'});
+				$('#main-display').html(tmpl);
+			}
+			
+			function displayPortfolio()
+			{
+				var tmpl = _.template($('#tmpl-portfolio').html(), portfolioData, {variable:'app'});
+				$('#main-display').html(tmpl);
+
+				var portfolioDisplayLarge = _.template($('#tmpl-portfolio-sub').html());
+
+				$('.portfolio-item').click(function(){
+					var $selected = $('.selected');
+					if( !$(this).is($selected)){
+						$selected.removeClass('selected');
+						$(this).addClass('selected');
+						var clickElement = this; // closure var for use w/inner function 
+						$('#portfolio-display').fadeOut( 'fast' , function(){
+							var itemId = $(clickElement).attr('data-id');
+							var tmpl = portfolioDisplayLarge(portfolioData[itemId]);
+							$('#portfolio-display').html(tmpl);
+							$('#portfolio-display').fadeIn('slow');
+						});
+					}
+				});
+			}
+
+			//*****************
+			// Do canvas Stuff
+			//*****************
+			var resizeCanvas = function() // FIXME: this function doesn't work for all resize events... esp. creation of scroll bars 
+			{
+				var	width = $('body').width();
+				console.log(width);
+				$('canvas').attr('width', width);
+				$('canvas').attr('height', 400);
+			}
+			resizeCanvas();
+			$(window).resize(resizeCanvas);
+
 		});
 	</script>
  </body>
