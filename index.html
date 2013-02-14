@@ -5,15 +5,30 @@
  <body>
 	<canvas id="canvas"></canvas>
 	
-	<button id="pause-button">Pause</button>
+	<button id="animate-toggle">Pause</button>
 	<!-- Consider: create real links for non-javscript sites? -->
 	<div id="links">
-		<a id="resume-button" href="#nonajax">Resume</a>
-		<a id="portfolio-button" href="#nonajax2">Portfolio</a>
+		<a id="about-button" href="#about">about</a>
+		<a id="portfolio-button" href="#portfolio">portfolio</a>
+		<a id="resume-button" href="#résumé">resume</a>
 	</div>
 	
 	<div id="main-display" class="page-container">
 	</div>
+
+	<script type="text/template" id="tmpl-about">
+		<div id="about" class="page-content">
+			<div id="bumpers">
+				<p>I'm Jake, a jack of the interwebs with a tongue for javascript. This site serves as a port of call for some of my work and doodlings. You can find me in the following social spaces:</p>
+				<ul>
+					<li><a href="http://stackoverflow.com/users/217623/jacob-dalton">Stack Overflow</a></li>
+					<li><a href="https://github.com/jdalt/ose-specialpage-extension">Github</a></li>
+					<li><a href="https://plus.google.com/114459552858401596042/posts">Google+</a></li>
+					<li><a href="https://twitter.com/jdaltsalt">Twitter</a></li>
+				</ul>
+			</div>
+		</div>
+	</script>
 
 	<script type="text/template" id="tmpl-portfolio">
 		<div><div id="portfolio-items-container">
@@ -36,7 +51,7 @@
 	</script>
 	
 	<script type="text/template" id="tmpl-resume">	
-		<div id="main-content">  
+		<div class="page-content">  
 			<div id="bumpers">
 				<h1>Jacob Dalton</h1>
 				<div id="contact-info">
@@ -47,12 +62,12 @@
 				
 				<div id="skills" class="section">
 					<h2>Tech Skills</h2>  
-					<ul>
-						<li><strong>Frontend</strong> - HTML5, CSS3, Javascript, jQuery</li>
-						<li><strong>Backend</strong> - PHP, MySQL, Apache</li>
-						<li><strong>Version Control</strong> - Git</li>
-						<li><strong>CMS</strong> - Contao, MediaWiki</li>
-						<li><strong>Design</strong> - GIMP, Inkscape</li>
+					<ul class="tech-skills">
+						<li><strong>Frontend</strong><span class="dots"></span> <span>HTML5, CSS3, Javascript, jQuery</span></li>
+						<li><strong>Backend</strong><span class="dots"></span> <span>PHP, MySQL, Apache</span></li>
+						<li><strong>CMS</strong><span class="dots"></span> <span>Contao, MediaWiki</span></li>
+						<li><strong>Design</strong><span class="dots"></span> <span>GIMP, Inkscape</span></li>
+						<li><strong>Version Control</strong><span class="dots"></span> <span>Git</span></li>
 					</ul>
 				</div>
 				
@@ -60,15 +75,15 @@
 					<h2>Education</h2>
 					<ul class="institution">
 						<li><strong>University of Wisconsin-Madison</strong> <span class="finish-time">2009</span></li>
-						<li>B.S. Math and English Double Major </li>
+						<li>B.S. Math and English</li>
 						<li>Computer Science Certificate</li>
-						<li>3.38 GPA</li>
+						<li>3.4 GPA</li>
 					</ul>
 
 					<ul class="institution">
 						<li><strong>Copenhagen University</strong> <span class="finish-time">2007</span></li>
 						<li>Exchange Student</li>
-						<li>Master Level Courses in Literature</li>
+						<li>Master Courses in Literature</li>
 					</ul>
 				</div>
 				
@@ -76,7 +91,7 @@
 					<h2>Experience</h2>
 					<div class="work-exp"><strong>Open Source Ecology</strong><a href="http://test.opensourceecology.org/wiki/Special:TrueFans">test.opensourceecology.org/wiki/Special:TrueFans</a><span class="finish-time">2012 - present</span></div>
 					<div class="work-type">Freelance Development and Design</div>
-					<p class="work-desc">Currently developing web application for viral vclasseo recording and dissemination for nonprofit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.</p>
+					<p class="work-desc">Currently developing web application for viral video recording and dissemination for non-profit Open Source Ecology. Implemented as MediaWiki extension in PHP and using google and facebook javascript apis.</p>
 
 					<div class="work-exp"><strong>Dalton Landscaping</strong><a href="http://www.daltonlandscaping.com">www.daltonlandscaping.com</a><span class="finish-time">2012</span></div>
 					<div class="work-type">Freelance Development, Design, and Photography</div>
@@ -150,7 +165,6 @@
 		require.config({
 			baseUrl: 'js',
 			paths: {
-				// TODO: add local backups of these libraries
 				jquery: ['//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min', 'lib_backup/jquery'],
 				underscore: ['//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min', 'lib_backup/underscore']
 			},
@@ -165,7 +179,6 @@
 			function(Demo){
 				Demo.init();
 				Demo.start();
-
 			}
 		);
 
@@ -179,7 +192,11 @@
 							var clickedLink = this; // closure for inner function
 							$('#main-display').slideUp(function(){
 								var nextId = $(clickedLink).attr('id');
+								// Thinking long term here - we'll probably use Backbone.js model syncing in the future
 								switch(nextId){
+								case 'about-button':
+									displayAbout();
+									break;
 								case 'resume-button':
 									displayResume();
 									break;
@@ -196,18 +213,28 @@
 						e.preventDefault();
 					});
 
-					$('#pause-button').click(function(){
+					$('#animate-toggle').click(function(){
+						console.log('animate-clicked');
 						if(Demo.isRunning()){
 							Demo.pause();	
+							$(this).html('Animate');
 						} else {
 							Demo.start();
+							$(this).html('Pause');
 						}
 					});
 						
 					// Helper Functions
+
+					function displayAbout()
+					{
+						var tmpl = _.template($('#tmpl-about').html(), {});
+						$('#main-display').html(tmpl);
+					}
+
 					function displayResume()
 					{
-						var tmpl = _.template($('#tmpl-resume').html(), portfolioData, {variable:'app'});
+						var tmpl = _.template($('#tmpl-resume').html(), {});
 						$('#main-display').html(tmpl);
 					}
 					
@@ -240,9 +267,9 @@
 					var resizeCanvas = function() // FIXME: this function doesn't work for all resize events... esp. creation of scroll bars 
 					{
 						var	width = $('body').width();
-						console.log(width);
 						$('canvas').attr('width', width);
 						$('canvas').attr('height', 400);
+						Demo.draw();
 					}
 					resizeCanvas();
 					$(window).resize(resizeCanvas);

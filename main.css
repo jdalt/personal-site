@@ -1,5 +1,39 @@
 /* main.css - primary style sheet for portfolio website */
 
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.com */
+@font-face {
+    font-family: 'fontinbold';
+    src: url('fonts/fontin-bold-webfont.eot');
+    src: url('fonts/fontin-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/fontin-bold-webfont.woff') format('woff'),
+         url('fonts/fontin-bold-webfont.ttf') format('truetype'),
+         url('fonts/fontin-bold-webfont.svg#fontinbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Calluna';
+    src: url('fonts/Calluna-Regular-webfont.eot');
+    src: url('fonts/Calluna-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Calluna-Regular-webfont.woff') format('woff'),
+         url('fonts/Calluna-Regular-webfont.ttf') format('truetype'),
+         url('fonts/Calluna-Regular-webfont.svg#CallunaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CallunaSans';
+    src: url('fonts/CallunaSansRegular-webfont.eot');
+    src: url('fonts/CallunaSansRegular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/CallunaSansRegular-webfont.woff') format('woff'),
+         url('fonts/CallunaSansRegular-webfont.ttf') format('truetype'),
+         url('fonts/CallunaSansRegular-webfont.svg#CallunaSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *{
 	margin: 0;
 }
@@ -16,7 +50,7 @@ canvas{
 	position: absolute;
 	left: 0;
 	top: 0;
-	background-color: transparent; /* ??? */
+	background-color: #fff; /* ??? */
 	z-index: -1;
 }
 
@@ -28,6 +62,7 @@ h1{
 h2{
 	color: #444;
 	font-weight: normal;
+	margin: .2em 0;
 }
 ul{
 	margin-top: 5px;
@@ -44,33 +79,56 @@ a{
 	text-align: center;
 }
 
-.page-container{
-	padding-top: 50px;
-}
-
-#main-content{
+.page-content{
 	text-align: left;
 	background-color: #fff;
-	width: 960px;
-	margin: 25px auto 0 auto;
-	padding: 25px 0;
-	box-shadow: 0 0 7px #000;
+	width: 900px;
+	margin: 0 auto;
+	padding: 2em 0;
+	box-shadow: 0 0 7px #444;
+	font-family: 'Calluna', sans-serif;
 }
 
+.page-container{
+	padding-top: 85px;
+}
 
 /**/
 #links{
-	padding-left: 15%;
-	padding-top: 150px;
+	margin-top: 1.5em;
 	color: #fff;
-	float: left;
-	position: absolute; /* take #links out of flow calculations so other content gets properly centered with text-align */
+	position: absolute;
+	width: 100%;
+	text-align: center;
 }
 #links a{
 	font-size: 150%;
-	padding-bottom: .5em;
 	text-align: center;
-	display: block;
+	padding: 0 .5em;
+	font-family: 'fontinbold', Georgia;
+}
+
+#animate-toggle{
+	border: none;
+	color: #fff;
+	background-color: transparent;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	z-index: 1;
+}
+
+/****************************/
+/** About CSS **/
+#about{
+	background-color: transparent;
+	color: #fff;
+	box-shadow: none;
+	font-size: 126%;
+}
+
+#about li{
+	text-align: center;
 }
 
 /****************************/
@@ -115,10 +173,14 @@ a{
 /****************************/
 /** Resume Css **/
 #bumpers{
-	padding: 0 100px;
+	padding: 0 4em;
+}
+#main-display a{
+	font-family: 'CallunaSans', sans-serif;
 }
 #contact-info{
 	text-align: center;
+	margin-bottom: 2em;
 }
 #contact-info span{
 	margin-left: 10px;
@@ -152,10 +214,42 @@ a{
 }
 
 #address{
-	margin-top: 15px;
+	margin-top: 3em;
+	color: #444;
 	text-align: center;
 }
 
 .finish-time{
 	color: #444;
+}
+
+/*fx*/
+/* TODO: Crossbrowser */
+#education li{
+	margin-left: 1em;
+}
+#education li:first-child{
+	margin-left: 0;
+}
+
+#skills ul{
+	display: inline;
+}
+
+#skills ul li{
+    -moz-box-align: stretch;
+    -moz-box-orient: horizontal;
+    display: -moz-box;
+    width: 425px;
+}
+
+#skills ul li span, #skills ul li strong{
+	display: block;
+	-moz-box-flex: 0;
+}
+
+#skills ul.tech-skills li .dots{
+	background: url("img/dot.png") repeat-x scroll left transparent;
+	-moz-box-flex: 1;
+	margin: 0 1em;
 }
