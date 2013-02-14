@@ -1,9 +1,11 @@
-/*
- * sprite.js
+/*!
+ * sprite.js - builds world objects with orientation information
+ *
+ * Copyright 2013, Jacob Dalton
+ *
  */
 
-var Sprite = (function(module)
-{
+define(['underscore'], function(_){
 	function createSprite(imgFile)
 	{
 		var sprite = new Image();
@@ -30,7 +32,7 @@ var Sprite = (function(module)
 		
 		// temporary paint function until onload fires and overrides/overwrites it with drawImage
 		sprite.paint = function(ctx){
-			ctx.fillStyle = 'rgb('+ randomInt(0,255) + ','+ randomInt(0,255) +  ','+ randomInt(0,255) +')';
+			ctx.fillStyle = 'rgb('+ _.random(0,255) + ','+ _.random(0,255) +  ','+ _.random(0,255) +')';
 			ctx.fillRect(0, 0, this.width, this.height);
 		}
 		
@@ -90,10 +92,7 @@ var Sprite = (function(module)
 		ctx.stroke();
 	}
 	
-	module = {
+	return {
 		createSprite: createSprite
-	};
-	
-	return module;
-	
-}(Sprite || {}));
+	}
+});

@@ -110,40 +110,7 @@
 		</div>
 	</script>
 
- 
-  	<script data-main="js/main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
 	<script>
-		require.config({
-			baseUrl: 'js',
-			paths: {
-				jQuery: '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',
-				underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js'
-			},
-			shim: {
-				underscore: {
-					exports: '_'
-				}
-			}
-		});
-
-		require( ['jQuery', 'demo', 'input', 'util'],
-			function($, mod){
-
-
-			}
-		);
-
-	</script>
-<!-- these bad boys need to into my shim config i believe -->
-  <script src=></script>
-  <script src=></script>
-  <script src="includes.js"></script>
-	<script>
-			var libs = new Array( 'util.js', 'sprite.js', 'input.js', 'main.js');
-			include_files(libs, function(){ Demo.init(); Demo.start();});
-
-		// Data Model For Portfolio Work
-		// TODO: Add English Camp Work
 		var portfolioData =  // :( global namespace pollution, replace with textfile and RequireJs
 			[ {
 					clientName: 'The Madison Review',
@@ -175,83 +142,116 @@
 				} 
 			];
 		
-		$(document).ready(function(){
-			
-			$('#links a').click(function(e){
-				// We only respond to clicks that change the active link
-				if($('#main-display').attr('data-active-id') !== $(this).attr('id')){
-					var clickedLink = this; // closure for inner function
-					$('#main-display').slideUp(function(){
-						var nextId = $(clickedLink).attr('id');
-						switch(nextId){
-						case 'resume-button':
-							displayResume();
-							break;
-						case 'portfolio-button':
-							displayPortfolio();
-							break;
-						default:
-							console.log('WTF Button Clicked');
-						}
-						$('#main-display').slideDown('slow');
-						$('#main-display').attr('data-active-id', nextId);
-					});
-				}
-				e.preventDefault();
-			});
+	</script>
 
-			$('#pause-button').click(function(){
-				if(Demo.isRunning()){
-					Demo.pause();	
-				} else {
-					Demo.start();
+	<!-- data-main="js/main" --> 
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
+	<script>
+		require.config({
+			baseUrl: 'js',
+			paths: {
+				// TODO: add local backups of these libraries
+				jquery: ['//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min', 'lib_backup/jquery'],
+				underscore: ['//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min', 'lib_backup/underscore']
+			},
+			shim: {
+				underscore: {
+					exports: '_'
 				}
-			});
-				
-			// Helper Functions
-			function displayResume()
-			{
-				var tmpl = _.template($('#tmpl-resume').html(), portfolioData, {variable:'app'});
-				$('#main-display').html(tmpl);
 			}
-			
-			function displayPortfolio()
-			{
-				var tmpl = _.template($('#tmpl-portfolio').html(), portfolioData, {variable:'app'});
-				$('#main-display').html(tmpl);
+		});
 
-				var portfolioDisplayLarge = _.template($('#tmpl-portfolio-sub').html());
+		require( ['demo'],
+			function(Demo){
+				Demo.init();
+				Demo.start();
 
-				$('.portfolio-item').click(function(){
-					var $selected = $('.selected');
-					if( !$(this).is($selected)){
-						$selected.removeClass('selected');
-						$(this).addClass('selected');
-						var clickElement = this; // closure var for use w/inner function 
-						$('#portfolio-display').fadeOut( 'fast' , function(){
-							var itemId = $(clickElement).attr('data-id');
-							var tmpl = portfolioDisplayLarge(portfolioData[itemId]);
-							$('#portfolio-display').html(tmpl);
-							$('#portfolio-display').fadeIn('slow');
+			}
+		);
+
+		require( ['jquery', 'underscore','demo'],
+			function($, _, Demo){
+				$(document).ready(function(){
+					
+					$('#links a').click(function(e){
+						// We only respond to clicks that change the active link
+						if($('#main-display').attr('data-active-id') !== $(this).attr('id')){
+							var clickedLink = this; // closure for inner function
+							$('#main-display').slideUp(function(){
+								var nextId = $(clickedLink).attr('id');
+								switch(nextId){
+								case 'resume-button':
+									displayResume();
+									break;
+								case 'portfolio-button':
+									displayPortfolio();
+									break;
+								default:
+									console.log('WTF Button Clicked');
+								}
+								$('#main-display').slideDown('slow');
+								$('#main-display').attr('data-active-id', nextId);
+							});
+						}
+						e.preventDefault();
+					});
+
+					$('#pause-button').click(function(){
+						if(Demo.isRunning()){
+							Demo.pause();	
+						} else {
+							Demo.start();
+						}
+					});
+						
+					// Helper Functions
+					function displayResume()
+					{
+						var tmpl = _.template($('#tmpl-resume').html(), portfolioData, {variable:'app'});
+						$('#main-display').html(tmpl);
+					}
+					
+					function displayPortfolio()
+					{
+						var tmpl = _.template($('#tmpl-portfolio').html(), portfolioData, {variable:'app'});
+						$('#main-display').html(tmpl);
+
+						var portfolioDisplayLarge = _.template($('#tmpl-portfolio-sub').html());
+
+						$('.portfolio-item').click(function(){
+							var $selected = $('.selected');
+							if( !$(this).is($selected)){
+								$selected.removeClass('selected');
+								$(this).addClass('selected');
+								var clickElement = this; // closure var for use w/inner function 
+								$('#portfolio-display').fadeOut( 'fast' , function(){
+									var itemId = $(clickElement).attr('data-id');
+									var tmpl = portfolioDisplayLarge(portfolioData[itemId]);
+									$('#portfolio-display').html(tmpl);
+									$('#portfolio-display').fadeIn('slow');
+								});
+							}
 						});
 					}
+
+					//*****************
+					// Do canvas Stuff
+					//*****************
+					var resizeCanvas = function() // FIXME: this function doesn't work for all resize events... esp. creation of scroll bars 
+					{
+						var	width = $('body').width();
+						console.log(width);
+						$('canvas').attr('width', width);
+						$('canvas').attr('height', 400);
+					}
+					resizeCanvas();
+					$(window).resize(resizeCanvas);
+
 				});
-			}
 
-			//*****************
-			// Do canvas Stuff
-			//*****************
-			var resizeCanvas = function() // FIXME: this function doesn't work for all resize events... esp. creation of scroll bars 
-			{
-				var	width = $('body').width();
-				console.log(width);
-				$('canvas').attr('width', width);
-				$('canvas').attr('height', 400);
 			}
-			resizeCanvas();
-			$(window).resize(resizeCanvas);
+		);
 
-		});
 	</script>
  </body>
 </html>

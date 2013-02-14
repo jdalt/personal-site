@@ -1,10 +1,15 @@
-'use strict'; // test with and without this, but nice to keep it to warn us if we're polluting the global scope
+/*!
+ * demo.js - main entrypoint for canvas library
+ *
+ * Copyright 2013, Jacob Dalton
+ *
+ */
 
+// TODO: all libraries should use 'use strict' to catch any global scope pollution
+// ...probably also use a build process with jshint and uglify too...
+'use strict'; 
 
-// FIXME: Horrid stench of global scope pollution rises up from a pool of slop
-// Rap these in a Game or Demo object?
-
-var Demo = (function(Input, Sprite){
+define(['input', 'sprite'], function(Input, Sprite){
 	var drift;
 	var zepplin;
 	var whale;
@@ -129,4 +134,4 @@ var Demo = (function(Input, Sprite){
 		pause : pause,
 		isRunning : isRunning
 	}
-}(Input, Sprite));
+});

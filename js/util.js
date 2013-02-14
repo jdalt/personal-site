@@ -1,26 +1,22 @@
-//  **********************
-//  * Print, Debug, Util *
-//  **********************
+/*!
+ * util.js - some minor utility classes
+ *
+ * Copyright 2013, Jacob Dalton
+ *
+ */
 
-function randomInt(low,hi)
-{
-	return Math.floor(Math.random()*(hi - low)) + low;
-}
+define(function(){
+	randomInt: function (low,hi) {
+		return Math.floor(Math.random()*(hi - low)) + low;
+	}
 
-function getSeconds()
-{cput("nList Content:");
-	for(i=0; i<this.nameList.leng(); i++)
-	{
-		cput(nList.getId(i) + " " + nList.path(i) + " " + nList.getName(i));
-	} 
+	getSeconds: function(){
+		var d = new Date();
+		return d.getTime() * .001;
+	}
 
-	var d = new Date();
-	return d.getTime() * .001;
-}
-
-function getMilliseconds()
-{
-	var d = new Date();
-	return d.getTime();
-}
-
+	getMilliseconds: function(){
+		var d = new Date();
+		return d.getTime();
+	}
+});

@@ -1,11 +1,16 @@
-	
+/*!
+ * input.js - input handler for canvas library
+ *
+ * Copyright 2013, Jacob Dalton
+ *
+ */
 
-var Input = (function(module, global, $)
-{
+define(['jquery'], function($){
+
 	var keyState = {}; //persistent across frames
 
-	$(global).keydown(keyDown);
-	$(global).keyup(keyUp);
+	$(window).keydown(keyDown);
+	$(window).keyup(keyUp);
 	
 	function keyDown(e)
 	{
@@ -33,16 +38,13 @@ var Input = (function(module, global, $)
 		}
 		return activeKeys;
 	}
-	
-	module = {
+
+	return {
 		getActiveKeys : getActiveKeys,
 		SPACE_KEY : 32,
 		LEFT_KEY : 37,
 		UP_KEY : 38,
 		RIGHT_KEY : 39,
 		DOWN_KEY : 40
-	};
-	
-	return module;
-	
-}(Input || {}, this, jQuery));  //TODO: it would probably be optimal to take the keyUp and keyDown functions rather than window and jQuery...
+	}
+});
