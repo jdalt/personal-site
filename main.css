@@ -160,13 +160,25 @@ a{
 	box-shadow: 0 0 7px #aaa;
 	display: inline-block;
 }
-#portfolio-display p{
+#portfolio-box{
 	margin-top: 20px;
 	padding: 20px;
 	box-shadow: 0 0 7px #aaa;
+	background-color: #fff;
+	font-family: 'Calluna' , serif;
 }
-#portfolio-display p span{
+#portfolio-sub-title > *{
 	display: block;
+}
+#portfolio-box p{
+	margin-top: 1em;
+}
+#blurb{
+	padding: 0 25%;
+	color: #fff;
+	margin-bottom: 1em;
+	font-size: 126%;
+	font-family: 'Calluna';
 }
 
 
@@ -237,19 +249,24 @@ a{
 }
 
 #skills ul li{
+    width: 425px;
     -moz-box-align: stretch;
     -moz-box-orient: horizontal;
     display: -moz-box;
-    width: 425px;
+    -webkit-box-align: stretch;
+    -webkit-box-orient: horizontal;
+    display: -webkit-box;
 }
 
 #skills ul li span, #skills ul li strong{
 	display: block;
 	-moz-box-flex: 0;
+	-webkit-box-flex: 0;
 }
 
 #skills ul.tech-skills li .dots{
 	background: url("img/dot.png") repeat-x scroll left transparent;
 	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
 	margin: 0 1em;
 }

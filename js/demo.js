@@ -9,7 +9,7 @@
 // ...probably also use a build process with jshint and uglify too...
 'use strict'; 
 
-define(['input', 'sprite'], function(Input, Sprite){
+define(['input', 'sprite', 'jquery' ], function(Input, Sprite, $){
 	var drift;
 	var zepplin;
 	var whale;
@@ -22,10 +22,13 @@ define(['input', 'sprite'], function(Input, Sprite){
 	function init() {
 		drift = 0;
 		zepplin = Sprite.createSprite('zepplin.png');
-		zepplin.setPos(zepplin.cx, zepplin.cy);
+		$(zepplin).bind('load', function(){
+			this.setPos(this.cx + 20, this.cy + 20);
+		});
 		whale = Sprite.createSprite('whale.png');
-		whale.setPos(-whale.cx,365);
-		return drawIntervalHandle;
+		$(whale).bind('load', function(){
+			whale.setPos(-whale.cx,430);
+		});
 	}
 
 	function start(){
@@ -51,13 +54,6 @@ define(['input', 'sprite'], function(Input, Sprite){
 		if (canvas.getContext) {
 			deltaWorld();
 			translateKeysToAction();
-			whale.px = whale.px < canvas.width + whale.cx/2 ? whale.px + 3 : -whale.cx; 
-			whale.angle += .015 * angleSign;
-			if(whale.angle > .1){
-				angleSign = -1;
-			} else if(whale.angle < -.5){
-				angleSign = 1;
-			}
 			
 			var ctx = canvas.getContext('2d');
 			//Clear screen, get ready to draw
@@ -79,6 +75,15 @@ define(['input', 'sprite'], function(Input, Sprite){
 		offset += ship_delta*flip;
 		if(Math.abs(offset)>6){
 			flip *= -1;
+		}
+
+		whale.px = whale.px < canvas.width + whale.cx/2 ? whale.px + 3 : -whale.cx; 
+		whale.py = whale.py + angleSign;
+		whale.angle += .01 * angleSign;
+		if(whale.angle > .2){
+			angleSign = -1;
+		} else if(whale.angle < -.35){
+			angleSign = 1;
 		}
 	}
 

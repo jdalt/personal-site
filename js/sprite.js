@@ -17,6 +17,7 @@ define(['underscore'], function(_){
 			this.paint = function(ctx){
 				ctx.drawImage(this, 0, 0, this.width, this.height);
 			}
+			console.log('loaded: ' + sprite.src);
 		}
 		
 		sprite.onerror = function(){
@@ -57,14 +58,13 @@ define(['underscore'], function(_){
 		obj.cx = c_x;
 		obj.cy = c_y;
 		obj.angle = 0.0;
-		obj.super = false;
 		obj.draw = function(ctx){
 			ctx.save();
 			ctx.translate(obj.px, obj.py);
 			ctx.rotate(obj.angle);
 			ctx.translate(-obj.cx,-obj.cy); // by default we rotate around the center of an object, changing center will result in different rotation properties
 			this.paint(ctx); // method defined creating object, different for rect, image, path...
-			drawExtents(ctx, obj); //TODO: make this a debug flag
+			//drawExtents(ctx, obj); //TODO: make this a debug flag
 			ctx.restore();
 		}
 		
