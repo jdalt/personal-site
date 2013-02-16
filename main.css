@@ -93,6 +93,11 @@ a{
 	padding-top: 85px;
 }
 
+.resume-print{
+	padding: 0;
+	box-shadow: none; 
+}
+
 /**/
 #links{
 	margin-top: 1.5em;
@@ -211,7 +216,7 @@ a{
 	clear: both;
 }
 #experience a{
-	color: #444;
+	color: #66a;
 }
 
 .work-exp strong, .work-exp span, .work-exp a{
@@ -222,7 +227,7 @@ a{
 	color: #999;
 }
 .work-desc{
-	margin-bottom: 10px;
+	margin-bottom: 2em;
 }
 
 #address{
@@ -233,6 +238,7 @@ a{
 
 .finish-time{
 	color: #444;
+	margin-left: 5px;
 }
 
 /*fx*/
@@ -265,8 +271,17 @@ a{
 }
 
 #skills ul.tech-skills li .dots{
-	background: url("img/dot.png") repeat-x scroll left transparent;
+/*	background: url("img/dot.png") repeat-x scroll left transparent;*/
 	-moz-box-flex: 1;
 	-webkit-box-flex: 1;
-	margin: 0 1em;
+	margin: 0 .35em;
+}
+
+/* only for printout? */
+#skills ul.tech-skills li .dots .top-border
+{
+    border-top: 2px dotted #999999;
+    display: inline-block;
+    margin-top: 11px;
+    width: 100%;
 }
