@@ -27,7 +27,7 @@ define(['input', 'sprite', 'jquery' ], function(Input, Sprite, $){
 		});
 		whale = Sprite.createSprite('whale.png');
 		$(whale).bind('load', function(){
-			whale.setPos(-whale.cx,430);
+			whale.setPos(-whale.cx,395);
 		});
 	}
 
@@ -70,21 +70,28 @@ define(['input', 'sprite', 'jquery' ], function(Input, Sprite, $){
 	var flip = 1;
 	function deltaWorld()
 	{
-		var ship_delta = .07;
-		zepplin.py += ship_delta*flip;
-		offset += ship_delta*flip;
+		//	var ship_delta = .07;
+		var period = 100;
+		zepplin.py += Math.sin((drift * Math.PI)/period) * 15/period; //ship_delta*flip;
+		/*offset += ship_delta*flip;
 		if(Math.abs(offset)>6){
 			flip *= -1;
-		}
+		}*/
 
+		
+		
 		whale.px = whale.px < canvas.width + whale.cx/2 ? whale.px + 3 : -whale.cx; 
-		whale.py = whale.py + angleSign;
+		whale.py += Math.cos((drift * Math.PI)/period) * 275/period; //ship_delta*flip;
+		//console.log(Math.acos(Math.cos((drift * Math.PI)/period)));
+		whale.angle = Math.atan(Math.cos((drift * Math.PI)/period)) ; //+ 7*Math.PI/4; 
+	/*	whale.py = whale.py + angleSign;
 		whale.angle += .01 * angleSign;
 		if(whale.angle > .2){
 			angleSign = -1;
 		} else if(whale.angle < -.35){
 			angleSign = 1;
 		}
+		*/
 	}
 
 	// Consider moving this into Input and having objects bind functions to events  ... Input.bindActiveKey('StringKeyName', function() {}): 
