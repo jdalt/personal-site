@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="main.css"/>
  </head>
  <body>
-	<canvas id="canvas"></canvas>
+	<canvas id="canvas"><div></div></canvas>
 	
 	<button id="animate-toggle">Pause</button>
 	<!-- Consider: create real links for non-javscript sites? -->
@@ -318,6 +318,13 @@
 					}
 					resizeCanvas();
 					$(window).resize(resizeCanvas);
+					
+					// Feature detect the canvas and change color
+					// to allow for progressive enhancement
+					var canvas = document.getElementById('canvas');
+					if (canvas.getContext) {
+						$('body').css('background-color', 'transparent');
+					}
 
 				});
 

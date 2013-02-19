@@ -45,12 +45,13 @@ body{
 	font-family: ubuntu;
 	width: 100%;
 	overflow-x: hidden;
+	background-color: #000;
 }
 canvas{
 	position: absolute;
 	left: 0;
 	top: 0;
-	background-color: #fff; /* ??? */
+ 	background-color: #fff; /* ??? */ 
 	z-index: -1;
 }
 
