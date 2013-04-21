@@ -286,3 +286,56 @@ a{
     margin-top: 11px;
     width: 100%;
 }
+
+/* RESPONSIVE styles */
+@media only screen and (max-width: 900px) {
+  .page-content{
+    width: 100%;
+    margin: 2em auto;
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 600px) {  
+  #bumpers{
+    padding: 0 1em;
+  }
+  
+  #resume h1{
+    font-size: 3rem;
+    padding-top: .75rem;
+  }
+  
+  #resume h2{
+    font-size: 1.25rem;
+  }
+  
+  #contact-info{
+    font-size: .75rem;
+  }
+  
+  #resume ul li{
+    width: 100%;
+    font-size: .9rem;
+  }
+  
+  #experience{
+    padding-top: 1rem;
+  }
+  
+  #blurb{
+    padding: .5rem .25rem;
+  }
+  
+  #portfolio-display{
+    width: 100%;
+  }
+  
+  #portfolio-display img{
+    width: 100%;
+  }
+  
+  #address{
+    padding-bottom: 1em;
+  }
+  
+}

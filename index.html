@@ -60,7 +60,7 @@
 	</script>
 	
 	<script type="text/template" id="tmpl-resume">	
-		<div class="page-content">  
+		<div id="resume" class="page-content">  
 			<div id="bumpers">
 				<h1>Jacob Dalton</h1>
 				<div id="contact-info">
@@ -316,6 +316,9 @@
 						var	width = $('body').width();
 						$('canvas').attr('width', width);
 						$('canvas').attr('height', 400);
+						if( width < 600 ) {
+              Demo.scaleSprites(width/600);
+            }
 						Demo.draw();
 					}
 					resizeCanvas();

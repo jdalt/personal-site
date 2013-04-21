@@ -23,13 +23,25 @@ define(['input', 'sprite', 'jquery' ], function(Input, Sprite, $){
 		drift = 0;
 		zepplin = Sprite.createSprite('zepplin.png');
 		$(zepplin).bind('load', function(){
-			this.setPos(this.cx + 20, this.cy + 20);
+			this.setPos(this.cx + 10, this.cy + 50);
 		});
 		whale = Sprite.createSprite('whale.png');
 		$(whale).bind('load', function(){
 			whale.setPos(-whale.cx,395);
 		});
 	}
+	
+	function scaleSprites(percent){
+    if( whale.loaded ) {
+      whale.setSize(whale.orig_width * percent, whale.orig_height * percent);
+    } 
+    if( zepplin.loaded ) {
+      zepplin.setSize(zepplin.orig_width * percent, zepplin.orig_height * percent);
+    }
+    if( !whale.loaded || !zepplin.loaded) {
+      setTimeout( function(){ scaleSprites(percent) }, 100 );
+    }
+  }
 
 	function start(){
 		if(drawIntervalHandle === undefined){
@@ -144,6 +156,7 @@ define(['input', 'sprite', 'jquery' ], function(Input, Sprite, $){
 		draw : draw,
 		start  : start,
 		pause : pause,
-		isRunning : isRunning
+		isRunning : isRunning,
+    scaleSprites : scaleSprites
 	}
 });

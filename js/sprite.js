@@ -10,13 +10,17 @@ define(['underscore'], function(_){
 	{
 		var sprite = new Image();
 		sprite.src = 'sprite/' +imgFile; // ** fallback for failed image loading !!
+		this.loaded = false;
 		
 		sprite.onload = function(){
+      this.orig_height = this.height; // stash height, width so we can scale against natural height
+      this.orig_width = this.width;
 			this.setSize(this.width, this.height); // recalculate the center
 			// assign real paint function here
 			this.paint = function(ctx){
 				ctx.drawImage(this, 0, 0, this.width, this.height);
 			}
+			this.loaded = true;
 			console.log('loaded: ' + sprite.src);
 		}
 		
