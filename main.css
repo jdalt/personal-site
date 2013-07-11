@@ -206,17 +206,19 @@ a{
 .section{
 	margin-top: 15px;
 	color: #555;
+    clear: both;
 }
 #skills{
-	float: left;
+	/* float: left; */
 }
 #education{
-	float: right;
+	/* float: right; */
+    clear: both;
 }
 #experience{
 	clear: both;
 }
-#experience a{
+#experience a, #projects a{
 	color: #66a;
 }
 
@@ -251,12 +253,17 @@ a{
 	margin-left: 0;
 }
 
+#skills{
+    width: 100%;
+}
+
 #skills ul{
 	display: inline;
 }
 
 #skills ul li{
-    width: 425px;
+    /* width: 425px; */
+    width: 100%;
     -moz-box-align: stretch;
     -moz-box-orient: horizontal;
     display: -moz-box;
