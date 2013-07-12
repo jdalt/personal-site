@@ -1,0 +1,27 @@
+canvas {
+    display: none;
+}
+
+.page-content { 
+    box-shadow: none;
+}
+
+#links {
+    display: none;
+}
+
+.page-container {
+    padding-top: 0;
+} 
+
+.work-desc {
+    margin-bottom: 1em;
+}
+
+#animate-toggle {
+    display: none;
+}
+
+#address {
+    margin-top: 8em;
+}

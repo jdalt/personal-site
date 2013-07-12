@@ -294,6 +294,15 @@ a{
     width: 100%;
 }
 
+.institution {
+    float: left;
+    margin-bottom: 1em;
+}
+
+.institution:last-child {
+    margin-left: 5em;
+}
+
 /* RESPONSIVE styles */
 @media only screen and (max-width: 900px) {
   .page-content{
